@@ -20,5 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path('heavensgate/', admin.site.urls),
     path('auth/', include('xauth.urls')),
-    path('users/', include('xuser.urls'))
+    path('users/', include('xuser.urls')),
+    path('sensors/', include('sensors.urls'))
 ]

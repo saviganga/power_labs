@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'xauth',
-    'xuser'
+    'xuser',
+    'sensors'
 ]
 
 MIDDLEWARE = [
