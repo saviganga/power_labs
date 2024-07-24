@@ -26,7 +26,7 @@ class SensorDataSerializer(serializers.ModelSerializer):
         sensor_value = validated_data.get('sensor_value').split(',')
         if sensor_type == "GPS":
             if len(sensor_value) != 2:
-                return False, "Oops Invalid sensor value. Please pass in values in the format 'longitude,tatitude'"
+                return False, "Oops Invalid sensor value. Please pass in values in the format 'longitude,latitude'"
             else:
                 sensor_value = ','.join(sensor_value).replace(" ", "")
         else:
