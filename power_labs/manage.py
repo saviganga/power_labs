@@ -6,7 +6,10 @@ from dotenv import load_dotenv
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'power_labs.settings')
+    if os.environ.get("ENVIRONMENT") == "LOCAL":
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "power_labs.settings.local")
+    elif os.environ.get("ENVIRONMENT") == "CLOUD":
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "power_labs.settings.cloud")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -21,3 +24,4 @@ def main():
 if __name__ == '__main__':
     load_dotenv()
     main()
+
