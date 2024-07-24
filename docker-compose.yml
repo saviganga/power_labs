@@ -1,0 +1,12 @@
+version: "3.3"
+
+services:
+  app:
+    build: ./power_labs
+    container_name: "sensors-backend"
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./power_labs:/usr/src/app
+    ports:
+      - "8000:8000"
+
