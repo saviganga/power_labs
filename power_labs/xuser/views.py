@@ -23,10 +23,8 @@ class UserViewSet(ModelViewSet):
     
     def get_permissions(self):
         if self.action == 'create':
-            # Allow any user to create a user (remove IsAuthenticated)
             permission_classes = [permissions.AllowAny]
         else:
-            # Use the default permission classes for other actions
             permission_classes = self.permission_classes
 
         return [permission() for permission in permission_classes]
