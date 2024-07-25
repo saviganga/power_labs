@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_filters',
+
     'xauth',
     'xuser',
     'sensors'
@@ -114,6 +116,9 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "xauth.auth_backends.JWTAuthentication",
     ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'power_labs.pagination.PowerLabsPagination',
+    'PAGE_SIZE': 10
 }
 
 AUTH_USER_MODEL = "xuser.CustomUser"
