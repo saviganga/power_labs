@@ -66,21 +66,23 @@ class UserViewSet(ModelViewSet):
             )
 
     def list(self, request, *args, **kwargs):
-    
+
         try:
-
             queryset = self.filter_queryset(self.get_queryset())
-
-            serializer = self.get_serializer(queryset, many=True)
-
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.serializer_class(queryset, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = self.serializer_class(queryset, many=True)
             success_response = {
-                "message": "Successfully fetched users",
-                "data": serializer.data,
+                "message": "Successfully fetched user data",
+                "data": serializer.data
             }
+            
             return Response(
-                data=u_responses.user_success_response(data=success_response),
-                status=status.HTTP_200_OK,
-            )
+                    data=u_responses.user_success_response(data=success_response),
+                    status=status.HTTP_200_OK,
+                )
         except Exception as e:
             return Response(
                 data=u_responses.user_error_response(message="Unauthenticated user"),
