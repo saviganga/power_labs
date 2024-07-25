@@ -3,10 +3,10 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status, permissions
 from rest_framework.response import Response
-from rest_framework.decorators import action
 
 from sensors import models as sensor_models
 from sensors import serializers as sensor_serializers
+from sensors import filters as sensor_filters
 
 from xuser import utils as xuser_utils
 from xuser.responses import u_responses
@@ -16,6 +16,7 @@ class SensorDataViewSet(ModelViewSet):
     queryset = sensor_models.SensorData.objects.all()
     serializer_class = sensor_serializers.SensorDataSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_class = sensor_filters.SensorDataFilter
 
     def get_queryset(self):
         return self.queryset.all()
@@ -60,10 +61,14 @@ class SensorDataViewSet(ModelViewSet):
 
         try:
             queryset = self.filter_queryset(self.get_queryset())
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.serializer_class(queryset, many=True)
+                return self.get_paginated_response(serializer.data)
             serializer = self.serializer_class(queryset, many=True)
             success_response = {
                 "message": "Successfully fetched sensor data",
-                "data": serializer.data,
+                "data": serializer.data
             }
             
             return Response(
