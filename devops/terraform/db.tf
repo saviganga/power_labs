@@ -1,0 +1,29 @@
+resource "aws_db_instance" "sensor_data_db_instance" {
+  identifier             = "${var.PROJECT_NAME}-sensor-data-rds"
+  db_name                = var.DB_NAME
+  instance_class         = var.DB_INSTANCE_CLASS
+  allocated_storage      = var.DB_ALOCATED_STORAGE
+  engine                 = var.DB_ENGINE
+  engine_version         = var.DB_ENGINE_VERSION
+  username               = var.db_user
+  password               = var.db_password
+  db_subnet_group_name   = aws_db_subnet_group.sensor_data_subnet_group.name
+  vpc_security_group_ids = [aws_security_group.sensor_data_rds_sg.id]
+  parameter_group_name   = aws_db_parameter_group.sensor_data_db_parameter_group.name
+  publicly_accessible    = true
+  skip_final_snapshot    = true
+  deletion_protection    = true
+
+
+}
+
+resource "aws_db_parameter_group" "sensor_data_db_parameter_group" {
+  name   = "${var.PROJECT_NAME}-sensor-data-parameter-group"
+  family = "postgres16"
+
+  parameter {
+    name  = "log_connections"
+    value = "1"
+  }
+}
+
