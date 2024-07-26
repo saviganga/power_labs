@@ -8,13 +8,13 @@ variable "PROJECT_NAME" {
 
 }
 
-variable "db_password" {
+variable "DB_PASSWORD" {
   type        = string
   description = "database password"
   sensitive   = true
 }
 
-variable "db_user" {
+variable "DB_USER" {
   type        = string
   description = "database user"
 }
@@ -49,7 +49,7 @@ variable "DB_NAME" {
 
 variable "HOST_PORT" {
   type    = number
-  default = 80
+  default = 8000
 }
 
 
@@ -67,7 +67,7 @@ variable "ALB_TARGET_GROUP_TARGET_TYPE" {
 
 variable "ALB_TARGET_GROUP_HEALTH_CHECK_PATH" {
   type    = string
-  default = "/"
+  default = "/sensors/sensor-data/health"
 }
 
 
@@ -96,26 +96,26 @@ variable "ECS_TASK_CPU_ARCHITECTURE" {
 
 variable "EXECUTION_ROLE_ARN" {
   type    = string
-  default = "arn:aws:iam::590184069711:role/ecsTaskExecutionRole"
+#   default = "arn:aws:iam::590184069711:role/ecsTaskExecutionRole"
 }
 
 
 variable "CONTAINER_PORT" {
   type    = number
-  default = 80
+  default = 8000
 
 }
 
 
 variable "CONTAINER_NAME" {
   type    = string
-  default = "nginx-demo"
+  default = "power-labs"
 
 }
 
 
 variable "CONTAINER_IMAGE" {
   type    = string
-  default = "nginxdemos/hello"
+  default = "saviganga/power_labs"
 
 }

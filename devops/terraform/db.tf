@@ -5,8 +5,8 @@ resource "aws_db_instance" "sensor_data_db_instance" {
   allocated_storage      = var.DB_ALOCATED_STORAGE
   engine                 = var.DB_ENGINE
   engine_version         = var.DB_ENGINE_VERSION
-  username               = var.db_user
-  password               = var.db_password
+  username               = var.DB_USER
+  password               = var.DB_PASSWORD
   db_subnet_group_name   = aws_db_subnet_group.sensor_data_subnet_group.name
   vpc_security_group_ids = [aws_security_group.sensor_data_rds_sg.id]
   parameter_group_name   = aws_db_parameter_group.sensor_data_db_parameter_group.name

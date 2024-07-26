@@ -4,7 +4,7 @@ class UserResponses:
         if data == None and message == None:
             return {
                 "status": "FAILED",
-                "message": "Oops! User error",
+                "message": "Oops! Error",
             }
         else:
             if data:
@@ -24,7 +24,7 @@ class UserResponses:
         if data == None and message == None:
             return {
                 "status": "SUCCESS",
-                "message": "Oops! User error",
+                "message": "Success",
             }
         else:
             if data:

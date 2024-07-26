@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status, permissions
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from sensors import models as sensor_models
 from sensors import serializers as sensor_serializers
@@ -80,6 +81,14 @@ class SensorDataViewSet(ModelViewSet):
                 data=u_responses.user_error_response(message="Unable to fetch sensor data"),
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        
+    @action(methods=["get"], detail=False)
+    def health(self, request, pk=None):
+
+        return Response(
+                    data=u_responses.user_success_response(),
+                    status=status.HTTP_200_OK,
+                )
 
 
 

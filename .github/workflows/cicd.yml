@@ -57,3 +57,23 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          REGION: ${{ secrets.REGION }}
+          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_ENGINE: ${{ secrets.DB_ENGINE }}
+          DB_ENGINE_VERSION: ${{ secrets.DB_ENGINE_VERSION }}
+          DB_ALOCATED_STORAGE: ${{ secrets.DB_ALOCATED_STORAGE }}
+          DB_INSTANCE_CLASS: ${{ secrets.DB_INSTANCE_CLASS }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          HOST_PORT: ${{ secrets.HOST_PORT }}
+          ALB_TARGET_GROUP_PROTOCOL: ${{ secrets.ALB_TARGET_GROUP_PROTOCOL }}
+          ALB_TARGET_GROUP_TARGET_TYPE: ${{ secrets.ALB_TARGET_GROUP_TARGET_TYPE }}
+          ALB_TARGET_GROUP_HEALTH_CHECK_PATH: ${{ secrets.ALB_TARGET_GROUP_HEALTH_CHECK_PATH }}
+          ALB_LISTENER_PROTOCOL: ${{ secrets.ALB_LISTENER_PROTOCOL }}
+          ECS_TASK_OS_FAMILY: ${{ secrets.ECS_TASK_OS_FAMILY }}
+          ECS_TASK_CPU_ARCHITECTURE: ${{ secrets.ECS_TASK_CPU_ARCHITECTURE }}
+          EXECUTION_ROLE_ARN: ${{ secrets.EXECUTION_ROLE_ARN }}
+          CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+          CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+          CONTAINER_IMAGE: ${{ secrets.CONTAINER_IMAGE }}
+          DB_USER: ${{ secrets.DB_USER }}
