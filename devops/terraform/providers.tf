@@ -9,11 +9,11 @@ terraform {
     }
   }
 
-  # backend "s3" {
-  #   bucket         = "sensor-data-backend"
-  #   key            = "terraform.tfstate"
-  #   region         = "us-east-1"
-  # }
+  backend "s3" {
+    bucket         = "power-labs-sensor-data-backend"
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+  }
 
 }
 

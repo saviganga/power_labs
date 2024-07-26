@@ -47,7 +47,7 @@ variable "DB_NAME" {
 }
 
 
-variable "ALB_TARGET_GROUP_PORT" {
+variable "HOST_PORT" {
   type    = number
   default = 80
 }
@@ -71,10 +71,10 @@ variable "ALB_TARGET_GROUP_HEALTH_CHECK_PATH" {
 }
 
 
-variable "ALB_LISTENER_PORT" {
-  type    = number
-  default = 80
-}
+# variable "ALB_LISTENER_PORT" {
+#   type    = number
+#   default = 80
+# }
 
 
 variable "ALB_LISTENER_PROTOCOL" {
@@ -82,3 +82,40 @@ variable "ALB_LISTENER_PROTOCOL" {
   default = "HTTP"
 }
 
+
+variable "ECS_TASK_OS_FAMILY" {
+  type    = string
+  default = "LINUX"
+}
+
+variable "ECS_TASK_CPU_ARCHITECTURE" {
+  type    = string
+  default = "X86_64"
+}
+
+
+variable "EXECUTION_ROLE_ARN" {
+  type    = string
+  default = "arn:aws:iam::590184069711:role/ecsTaskExecutionRole"
+}
+
+
+variable "CONTAINER_PORT" {
+  type    = number
+  default = 80
+
+}
+
+
+variable "CONTAINER_NAME" {
+  type    = string
+  default = "nginx-demo"
+
+}
+
+
+variable "CONTAINER_IMAGE" {
+  type    = string
+  default = "nginxdemos/hello"
+
+}

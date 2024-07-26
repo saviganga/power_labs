@@ -10,13 +10,17 @@ resource "aws_lb" "lb" {
   tags = {
     Name = "${var.PROJECT_NAME}-lb"
   }
+
+  depends_on = [
+    aws_db_instance.sensor_data_db_instance
+  ]
 }
 
 
 # create a target group for the load balancer
 resource "aws_lb_target_group" "tg-ecs-task" {
   name        = "${var.PROJECT_NAME}-tg"
-  port        = var.ALB_TARGET_GROUP_PORT
+  port        = var.CONTAINER_PORT
   protocol    = var.ALB_TARGET_GROUP_PROTOCOL
   vpc_id      = data.aws_vpcs.current_vpcs.ids[0]
   target_type = var.ALB_TARGET_GROUP_TARGET_TYPE
@@ -29,10 +33,10 @@ resource "aws_lb_target_group" "tg-ecs-task" {
 
 
 
-# Create an ALB listener to handle load balancer redirect
+# Create an ALB listener to handle load balancer redirect # port that connects to the internet and sends request to the tg
 resource "aws_lb_listener" "alb-listener" {
   load_balancer_arn = aws_lb.lb.arn
-  port              = var.ALB_LISTENER_PORT
+  port              = var.HOST_PORT
   protocol          = var.ALB_LISTENER_PROTOCOL
 
   default_action {
@@ -40,3 +44,4 @@ resource "aws_lb_listener" "alb-listener" {
     target_group_arn = aws_lb_target_group.tg-ecs-task.arn
   }
 }
+
