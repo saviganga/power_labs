@@ -46,3 +46,39 @@ variable "DB_NAME" {
   default = "sensor_data"
 }
 
+
+variable "ALB_TARGET_GROUP_PORT" {
+  type    = number
+  default = 80
+}
+
+
+variable "ALB_TARGET_GROUP_PROTOCOL" {
+  type    = string
+  default = "HTTP"
+}
+
+
+variable "ALB_TARGET_GROUP_TARGET_TYPE" {
+  type    = string
+  default = "ip"
+}
+
+
+variable "ALB_TARGET_GROUP_HEALTH_CHECK_PATH" {
+  type    = string
+  default = "/"
+}
+
+
+variable "ALB_LISTENER_PORT" {
+  type    = number
+  default = 80
+}
+
+
+variable "ALB_LISTENER_PROTOCOL" {
+  type    = string
+  default = "HTTP"
+}
+
