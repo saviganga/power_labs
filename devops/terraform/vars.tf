@@ -49,7 +49,7 @@ variable "DB_NAME" {
 
 variable "HOST_PORT" {
   type    = number
-  default = 8000
+  default = 80
 }
 
 
@@ -102,7 +102,7 @@ variable "EXECUTION_ROLE_ARN" {
 
 variable "CONTAINER_PORT" {
   type    = number
-  default = 8000
+  default = 80
 
 }
 
