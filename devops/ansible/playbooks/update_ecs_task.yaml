@@ -6,6 +6,7 @@
     - name: Get existing task definition
       community.aws.ecs_taskdefinition_info:
         task_definition: '{{ task_definition_family }}'
+        region: '{{ region }}'
       register: current_task_definition
 
     - name: Set new image URI
@@ -18,6 +19,7 @@
 
     - name: Register new task definition
       community.aws.ecs_taskdefinition:
+        region: '{{ region }}'
         execution_role_arn: '{{ execution_role_arn }}'
         family: 'power-labs-family'
         network_mode: 'awsvpc'
@@ -52,6 +54,7 @@
 
     - name: Update ECS service
       community.aws.ecs_service:
+        region: '{{ region }}'
         cluster: '{{ cluster }}'
         service: '{{ cluster_service }}'
         task_definition: "{{ new_task_definition.taskdefinition.taskDefinitionArn }}"
