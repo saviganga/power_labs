@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         },
         {
           name  = "POSTGRES_USER"
-          value = var.DB_USER
+          value = aws_db_instance.sensor_data_db_instance.username
         },
         {
           name  = "POSTGRES_PASSWORD"
@@ -54,11 +54,11 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         },
         {
           name  = "POSTGRES_DB"
-          value = var.DB_NAME
+          value = aws_db_instance.sensor_data_db_instance.db_name
         },
         {
           name  = "POSTGRES_PORT"
-          value = var.POSTGRES_PORT
+          value = aws_db_instance.sensor_data_db_instance.port
         },
         {
           name  = "UPTRACE_DSN"

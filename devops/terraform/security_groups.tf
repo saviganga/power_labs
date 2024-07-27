@@ -67,11 +67,6 @@ resource "aws_security_group" "sensor_data_rds_sg" { # allow only the load balan
   }
 }
 
-# print out some output
-output "sensor_data_rds_sg_output" {
-  value = aws_security_group.sensor_data_rds_sg.name
-}
-
 
 resource "aws_security_group" "app_sg" {
   name        = "${var.PROJECT_NAME}-app-sg"
@@ -95,5 +90,10 @@ resource "aws_security_group" "app_sg" {
   tags = {
     Name = "${var.PROJECT_NAME}-app-sg"
   }
+}
+
+
+output "sensor_data_rds_sg_output" {
+  value = aws_security_group.sensor_data_rds_sg.name
 }
 
