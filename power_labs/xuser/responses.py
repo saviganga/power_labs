@@ -24,7 +24,7 @@ class UserResponses:
         if data == None and message == None:
             return {
                 "status": "SUCCESS",
-                "message": "Success",
+                "message": "Success nigga",
             }
         else:
             if data:
