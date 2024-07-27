@@ -57,7 +57,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -var 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' -var 'DB_USER=${{ secrets.DB_USER }}' -var 'EXECUTION_ROLE_ARN=${{ secrets.EXECUTION_ROLE_ARN }}' -input=false
+        run: terraform plan -var 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' -var 'DB_USER=${{ secrets.DB_USER }}' -var 'EXECUTION_ROLE_ARN=${{ secrets.EXECUTION_ROLE_ARN }}'  -var 'SECRET_KEY=${{ secrets.SECRET_KEY }}' -input=false
         working-directory: ./devops/terraform/
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -84,7 +84,7 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
 
       - name: Apply Terraform
-        run: terraform apply -auto-approve -var 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' -var 'DB_USER=${{ secrets.DB_USER }}' -var 'EXECUTION_ROLE_ARN=${{ secrets.EXECUTION_ROLE_ARN }}'
+        run: terraform apply -auto-approve -var 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' -var 'DB_USER=${{ secrets.DB_USER }}' -var 'EXECUTION_ROLE_ARN=${{ secrets.EXECUTION_ROLE_ARN }}'  -var 'SECRET_KEY=${{ secrets.SECRET_KEY }}'
         working-directory: ./devops/terraform/
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
