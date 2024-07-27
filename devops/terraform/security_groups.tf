@@ -5,9 +5,9 @@ resource "aws_security_group" "elb_sg" {
 
   ingress {
     description = "Allow TLS inbound traffic from the internet"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
