@@ -1,0 +1,9 @@
+[local]
+localhost ansible_connection=local
+
+[local:vars]
+task_definition_family=power-labs-family
+docker_hub_repo=saviganga/power_labs
+container_name=power-labs
+cluster=power-labs-ecs-cluster
+cluster_service=power-labs-ecs-service

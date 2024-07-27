@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - ganga
+      - devops
 
 jobs:
   build-and-push-docker:
@@ -38,6 +39,7 @@ jobs:
     name: Deploy with Terraform
     runs-on: ubuntu-latest
     needs: build-and-push-docker
+    if: github.ref == 'refs/heads/devops'
 
     steps:
       - name: Checkout Code
@@ -109,3 +111,28 @@ jobs:
           CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
           CONTAINER_IMAGE: ${{ steps.docker_build.outputs.image }}
           DB_USER: ${{ secrets.DB_USER }}
+
+
+  ansible:
+    name: Update ECS Task Definition
+    runs-on: ubuntu-latest
+    needs: build-and-push-docker
+    if: github.ref == 'refs/heads/ganga'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Ansible and AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install ansible boto3
+          pip3 install --upgrade awscli
+
+      - name: Update ECS Task Definition with Ansible
+        run: |
+          ansible-playbook -i ./devops/ansible/inventory, -c local ./devops/ansible/playbooks/update_ecs_task.yaml --extra-vars "new_image_tag=${{ env.NEW_IMAGE_TAG }} execution_role_arn=${{ secrets.EXECUTION_ROLE_ARN }}" 
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
