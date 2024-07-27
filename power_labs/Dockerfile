@@ -32,6 +32,5 @@ COPY . .
 RUN adduser user
 USER user
 
-
 # Run application
 CMD gunicorn power_labs.wsgi:application

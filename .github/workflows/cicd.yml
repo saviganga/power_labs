@@ -1,0 +1,166 @@
+name: build image, deploy new image
+
+on:
+  push:
+    branches:
+      - ganga
+      - devops
+
+jobs:
+  build-and-push-docker:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Set Image Tag
+        id: set_image_tag
+        run: echo "TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./power_labs
+          push: true
+          tags: saviganga/power_labs:${{ env.TAG }}
+      
+      - name: Set Docker Image Output
+        run: echo "::set-output name=image_uri::saviganga/power_labs:${{ env.TAG }}"
+
+
+  terraform:
+    name: Deploy with Terraform
+    runs-on: ubuntu-latest
+    needs: build-and-push-docker
+    if: github.ref == 'refs/heads/devops'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.7
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Get Latest Docker Image Tag
+        id: get_latest_tag
+        run: |
+          LATEST_TAG=$(curl -s https://hub.docker.com/v2/repositories/saviganga/power_labs/tags/?page_size=1 | jq -r '.results[0].name')
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: ./devops/terraform/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -var 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' -var 'DB_USER=${{ secrets.DB_USER }}' -var 'EXECUTION_ROLE_ARN=${{ secrets.EXECUTION_ROLE_ARN }}'  -var 'SECRET_KEY=${{ secrets.SECRET_KEY }}' -input=false
+        working-directory: ./devops/terraform/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          REGION: ${{ secrets.REGION }}
+          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_ENGINE: ${{ secrets.DB_ENGINE }}
+          DB_ENGINE_VERSION: ${{ secrets.DB_ENGINE_VERSION }}
+          DB_ALOCATED_STORAGE: ${{ secrets.DB_ALOCATED_STORAGE }}
+          DB_INSTANCE_CLASS: ${{ secrets.DB_INSTANCE_CLASS }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          HOST_PORT: ${{ secrets.HOST_PORT }}
+          ALB_TARGET_GROUP_PROTOCOL: ${{ secrets.ALB_TARGET_GROUP_PROTOCOL }}
+          ALB_TARGET_GROUP_TARGET_TYPE: ${{ secrets.ALB_TARGET_GROUP_TARGET_TYPE }}
+          ALB_TARGET_GROUP_HEALTH_CHECK_PATH: ${{ secrets.ALB_TARGET_GROUP_HEALTH_CHECK_PATH }}
+          ALB_LISTENER_PROTOCOL: ${{ secrets.ALB_LISTENER_PROTOCOL }}
+          ECS_TASK_OS_FAMILY: ${{ secrets.ECS_TASK_OS_FAMILY }}
+          ECS_TASK_CPU_ARCHITECTURE: ${{ secrets.ECS_TASK_CPU_ARCHITECTURE }}
+          EXECUTION_ROLE_ARN: ${{ secrets.EXECUTION_ROLE_ARN }}
+          CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+          CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+          CONTAINER_IMAGE: ${{ secrets.DOCKER_HUB_REPO }}:${{ env.LATEST_TAG }}
+          DB_USER: ${{ secrets.DB_USER }}
+
+      - name: Apply Terraform
+        run: terraform apply -auto-approve -var 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' -var 'DB_USER=${{ secrets.DB_USER }}' -var 'EXECUTION_ROLE_ARN=${{ secrets.EXECUTION_ROLE_ARN }}'  -var 'SECRET_KEY=${{ secrets.SECRET_KEY }}'
+        working-directory: ./devops/terraform/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          REGION: ${{ secrets.REGION }}
+          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_ENGINE: ${{ secrets.DB_ENGINE }}
+          DB_ENGINE_VERSION: ${{ secrets.DB_ENGINE_VERSION }}
+          DB_ALOCATED_STORAGE: ${{ secrets.DB_ALOCATED_STORAGE }}
+          DB_INSTANCE_CLASS: ${{ secrets.DB_INSTANCE_CLASS }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          HOST_PORT: ${{ secrets.HOST_PORT }}
+          ALB_TARGET_GROUP_PROTOCOL: ${{ secrets.ALB_TARGET_GROUP_PROTOCOL }}
+          ALB_TARGET_GROUP_TARGET_TYPE: ${{ secrets.ALB_TARGET_GROUP_TARGET_TYPE }}
+          ALB_TARGET_GROUP_HEALTH_CHECK_PATH: ${{ secrets.ALB_TARGET_GROUP_HEALTH_CHECK_PATH }}
+          ALB_LISTENER_PROTOCOL: ${{ secrets.ALB_LISTENER_PROTOCOL }}
+          ECS_TASK_OS_FAMILY: ${{ secrets.ECS_TASK_OS_FAMILY }}
+          ECS_TASK_CPU_ARCHITECTURE: ${{ secrets.ECS_TASK_CPU_ARCHITECTURE }}
+          EXECUTION_ROLE_ARN: ${{ secrets.EXECUTION_ROLE_ARN }}
+          CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+          CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+          CONTAINER_IMAGE: ${{ secrets.DOCKER_HUB_REPO }}:${{ env.LATEST_TAG }}
+          DB_USER: ${{ secrets.DB_USER }}
+
+
+  ansible:
+    name: Update ECS Task Definition
+    runs-on: ubuntu-latest
+    needs: build-and-push-docker
+    if: github.ref == 'refs/heads/ganga'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Ansible and AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install ansible boto3
+          pip3 install --upgrade awscli
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Get Latest Docker Image Tag
+        id: get_latest_tag
+        run: |
+          LATEST_TAG=$(curl -s https://hub.docker.com/v2/repositories/saviganga/power_labs/tags/?page_size=1 | jq -r '.results[0].name')
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+
+      - name: Update ECS Task Definition with Ansible
+        run: |
+          ansible-playbook -i ./devops/ansible/inventory, -c local ./devops/ansible/playbooks/update_ecs_task.yaml --extra-vars "new_image_uri=saviganga/power_labs:${{ env.LATEST_TAG }} execution_role_arn=${{ secrets.EXECUTION_ROLE_ARN }} task_definition_family=${{ secrets.TASK_DEFINITION_FAMILY }} docker_hub_repo=${{ secrets.DOCKER_HUB_REPO }} container_name=${{ secrets.CONTAINER_NAME }} cluster=${{ secrets.CLUSTER }} cluster_service=${{ secrets.CLUSTER_SERVICE }} region=${{ secrets.REGION }}"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = os.environ.get('SECRET_KEY')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -45,6 +45,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'power_labs.middlewares.LoggingMiddleware',
     'power_labs.middlewares.Handle404ErrorsMiddleware',
     'power_labs.middlewares.Handle403ErrorsMiddleware',
 ]
@@ -121,4 +122,30 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+APPEND_SLASH = False
+
 AUTH_USER_MODEL = "xuser.CustomUser"
+
+
+# OpenTelemetry configuration
+OTEL_SERVICE_NAME = 'power_labs'
+
+OTEL_TRACES_EXPORTER = 'otlp'
+OTEL_LOGS_EXPORTER = 'otlp'  
+# OTEL_METRICS_EXPORTER = 'oltp'  # Optional for metrics
+
+OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED = True
+OTEL_PYTHON_LOG_CORRELATION = True
+OTEL_PYTHON_LOG_LEVEL = 'info'
+
+# Enable gzip compression.
+OTEL_EXPORTER_OTLP_COMPRESSION = 'gzip'
+# Prefer delta temporality.
+OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE = 'DELTA'  # Optional for metrics
+
+# Uptrace Login
+OTEL_EXPORTER_OTLP_HEADERS = f"uptrace-dsn={os.environ.get('UPTRACE_DSN')}" 
+
+# Export endpoint, local Uptrace instance
+OTEL_EXPORTER_OTLP_ENDPOINT = '127.0.0.1:14317'
+OTEL_EXPORTER_OTLP_INSECURE = False 
