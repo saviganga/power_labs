@@ -19,6 +19,14 @@ resource "aws_security_group" "elb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+#   ingress {
+#     description = "Allow TLS inbound traffic from the internet"
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+
   ingress {
     description = "Allow TLS inbound traffic from the internet"
     from_port   = 8080
@@ -79,7 +87,7 @@ resource "aws_security_group" "app_sg" {
   ingress {
     from_port       = var.CONTAINER_PORT
     to_port         = var.CONTAINER_PORT
-    protocol        = "tcp"
+    protocol        = "-tcp"
     security_groups = [aws_security_group.elb_sg.id]
   }
 

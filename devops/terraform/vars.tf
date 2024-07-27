@@ -49,7 +49,7 @@ variable "DB_NAME" {
 
 variable "HOST_PORT" {
   type    = number
-  default = 80
+  default = 8000
 }
 
 
@@ -102,7 +102,7 @@ variable "EXECUTION_ROLE_ARN" {
 
 variable "CONTAINER_PORT" {
   type    = number
-  default = 80
+  default = 8000
 
 }
 
@@ -119,3 +119,53 @@ variable "CONTAINER_IMAGE" {
   default = "saviganga/power_labs"
 
 }
+
+
+variable "UPTRACE_DSN" {
+  type    = string
+  default = "https://_6cA0PMdKqG1CIaQ7tPzrw@api.uptrace.dev?grpc=4317"
+
+}
+
+
+variable "POSTGRES_PORT" {
+  type    = string
+  default = "5432"
+
+}
+
+
+variable "POSTGRES_DB" {
+  type    = string
+  default = "madagascar"
+
+}
+
+
+variable "POSTGRES_PASSWORD" {
+  type    = string
+  default = "mAdAgAscAr)(*&^"
+
+}
+
+
+variable "POSTGRES_USER" {
+  type    = string
+  default = "mAdAgAscAr)(*&^"
+
+}
+
+
+variable "ENVIRONMENT" {
+  type    = string
+  default = "CLOUD"
+
+}
+
+
+variable "SECRET_KEY" {
+  type    = string
+  default = "django-insecure-ep5*9qct=3(1c%61r$15nuq#8*!y@l3^u=+ueef011&8p$"
+
+}
+

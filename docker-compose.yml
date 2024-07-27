@@ -2,13 +2,13 @@ version: "3.3"
 
 services:
   app:
-    image: saviganga/power_labs:latest
+    build: ./power_labs
     container_name: "sensors-backend"
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./power_labs:/usr/src/app
     ports:
-      - "80:80"
+      - "8000:8000"
     depends_on:
       - db
 

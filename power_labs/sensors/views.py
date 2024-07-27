@@ -82,7 +82,7 @@ class SensorDataViewSet(ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         
-    @action(methods=["get"], detail=False)
+    @action(methods=["get"], detail=False, permission_classes=[permissions.AllowAny])
     def health(self, request, pk=None):
 
         return Response(
