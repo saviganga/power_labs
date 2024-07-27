@@ -18,6 +18,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   cpu                      = 1024
   memory                   = 2048
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  
   container_definitions = jsonencode([
     {
       name      = var.CONTAINER_NAME
@@ -30,8 +31,60 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
           protocol      = "tcp"
         }
       ]
+      environment = [
+        {
+          name  = "SECRET_KEY"
+          value = var.SECRET_KEY
+        },
+        {
+          name  = "ENVIRONMENT"
+          value = var.ENVIRONMENT
+        },
+        {
+          name  = "POSTGRES_USER"
+          value = var.POSTGRES_USER
+        },
+        {
+          name  = "POSTGRES_PASSWORD"
+          value = var.POSTGRES_PASSWORD
+        },
+        {
+          name  = "POSTGRES_DB"
+          value = var.POSTGRES_DB
+        },
+        {
+          name  = "POSTGRES_PORT"
+          value = var.POSTGRES_PORT
+        },
+        {
+          name  = "UPTRACE_DSN"
+          value = var.UPTRACE_DSN
+        },
+      ]
+      logConfiguration = {
+            logDriver = "awslogs"
+            options = {
+            "awslogs-create-group" = "true"
+            "awslogs-group"         = "/ecs/${var.PROJECT_NAME}"
+            "awslogs-region"        = var.REGION
+            "awslogs-stream-prefix" = "ecs"
+            }
+        }
+    # "logConfiguration": {
+    #             "logDriver": "awslogs",
+    #             "options": {
+    #                 "awslogs-create-group": "true",
+    #                 "awslogs-group": "awslogs-wordpress",
+    #                 "awslogs-region": "us-west-2",
+    #                 "awslogs-stream-prefix": "awslogs-example"
+    #             }
+    #         },
+    
     }
   ])
+
+
+  
 
   runtime_platform {
     operating_system_family = var.ECS_TASK_OS_FAMILY
@@ -66,9 +119,9 @@ resource "aws_ecs_service" "ecs_service" {
     deployment_minimum_healthy_percent = 50
     deployment_maximum_percent         = 200
 
-    lifecycle {
-     ignore_changes = [task_definition, desired_count]
-   }
+#     lifecycle {
+#      ignore_changes = [task_definition, desired_count]
+#    }
 
    launch_type                        = "FARGATE"
    scheduling_strategy                = "REPLICA"
