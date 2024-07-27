@@ -119,8 +119,8 @@ variable "UPTRACE_DSN" {
 
 
 variable "POSTGRES_PORT" {
-  type    = string
-  default = "5432"
+  type    = number
+  default = 5432
 
 }
 
