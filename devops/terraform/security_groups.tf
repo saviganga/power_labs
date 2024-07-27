@@ -87,7 +87,7 @@ resource "aws_security_group" "app_sg" {
   ingress {
     from_port       = var.CONTAINER_PORT
     to_port         = var.CONTAINER_PORT
-    protocol        = "-tcp"
+    protocol        = "tcp"
     security_groups = [aws_security_group.elb_sg.id]
   }
 
