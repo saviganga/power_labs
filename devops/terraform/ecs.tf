@@ -102,6 +102,12 @@ resource "aws_ecs_service" "ecs_service" {
 
   force_new_deployment = true
 
+  lifecycle {
+    ignore_changes = [
+      task_definition
+    ]
+  }
+
   load_balancer {
     target_group_arn = aws_lb_target_group.tg-ecs-task.arn
     container_name   = var.CONTAINER_NAME
