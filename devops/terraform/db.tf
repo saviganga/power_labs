@@ -27,3 +27,8 @@ resource "aws_db_parameter_group" "sensor_data_db_parameter_group" {
   }
 }
 
+
+# print out some output
+output "db_hostname_output" {
+  value = aws_db_instance.sensor_data_db_instance.address
+}

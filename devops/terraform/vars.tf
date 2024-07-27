@@ -19,6 +19,11 @@ variable "DB_USER" {
   description = "database user"
 }
 
+variable "DB_NAME" {
+  type    = string
+  default = "sensor_data"
+}
+
 variable "DB_ENGINE" {
   type    = string
   default = "postgres"
@@ -39,13 +44,6 @@ variable "DB_INSTANCE_CLASS" {
   type    = string
   default = "db.t3.micro"
 }
-
-
-variable "DB_NAME" {
-  type    = string
-  default = "sensor_data"
-}
-
 
 variable "HOST_PORT" {
   type    = number
@@ -69,13 +67,6 @@ variable "ALB_TARGET_GROUP_HEALTH_CHECK_PATH" {
   type    = string
   default = "/sensors/sensor-data/health/"
 }
-
-
-# variable "ALB_LISTENER_PORT" {
-#   type    = number
-#   default = 80
-# }
-
 
 variable "ALB_LISTENER_PROTOCOL" {
   type    = string
@@ -115,7 +106,7 @@ variable "CONTAINER_NAME" {
 
 variable "CONTAINER_IMAGE" {
   type    = string
-  default = "saviganga/power_labs:20240727070548"
+  default = "saviganga/power_labs:20240727081532"
 
 }
 
