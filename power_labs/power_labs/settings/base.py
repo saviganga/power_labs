@@ -122,6 +122,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+APPEND_SLASH = False
+
 AUTH_USER_MODEL = "xuser.CustomUser"
 
 
