@@ -58,7 +58,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         },
         {
           name  = "POSTGRES_PORT"
-          value = aws_db_instance.sensor_data_db_instance.port
+          value = tostring(aws_db_instance.sensor_data_db_instance.port)
         },
         {
           name  = "UPTRACE_DSN"
