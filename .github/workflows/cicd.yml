@@ -54,6 +54,18 @@ jobs:
         with:
           terraform_version: 1.3.7
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Get Latest Docker Image Tag
+        id: get_latest_tag
+        run: |
+          LATEST_TAG=$(curl -s https://hub.docker.com/v2/repositories/saviganga/power_labs/tags/?page_size=1 | jq -r '.results[0].name')
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+
       - name: Initialize Terraform
         run: terraform init
         working-directory: ./devops/terraform/
@@ -86,7 +98,7 @@ jobs:
           EXECUTION_ROLE_ARN: ${{ secrets.EXECUTION_ROLE_ARN }}
           CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
           CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-          CONTAINER_IMAGE: ${{ steps.docker_build.outputs.image }}
+          CONTAINER_IMAGE: ${{ secrets.DOCKER_HUB_REPO }}:${{ env.LATEST_TAG }}
           DB_USER: ${{ secrets.DB_USER }}
 
       - name: Apply Terraform
@@ -113,7 +125,7 @@ jobs:
           EXECUTION_ROLE_ARN: ${{ secrets.EXECUTION_ROLE_ARN }}
           CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
           CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-          CONTAINER_IMAGE: ${{ steps.docker_build.outputs.image }}
+          CONTAINER_IMAGE: ${{ secrets.DOCKER_HUB_REPO }}:${{ env.LATEST_TAG }}
           DB_USER: ${{ secrets.DB_USER }}
 
 
