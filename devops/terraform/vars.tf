@@ -67,7 +67,7 @@ variable "ALB_TARGET_GROUP_TARGET_TYPE" {
 
 variable "ALB_TARGET_GROUP_HEALTH_CHECK_PATH" {
   type    = string
-  default = "/sensors/sensor-data/health"
+  default = "/sensors/sensor-data/health/"
 }
 
 
