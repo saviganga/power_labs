@@ -41,16 +41,20 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
           value = var.ENVIRONMENT
         },
         {
+          name  = "DB_HOST"
+          value = aws_db_instance.sensor_data_db_instance.address
+        },
+        {
           name  = "POSTGRES_USER"
-          value = var.POSTGRES_USER
+          value = var.DB_USER
         },
         {
           name  = "POSTGRES_PASSWORD"
-          value = var.POSTGRES_PASSWORD
+          value = var.DB_PASSWORD
         },
         {
           name  = "POSTGRES_DB"
-          value = var.POSTGRES_DB
+          value = var.DB_NAME
         },
         {
           name  = "POSTGRES_PORT"
@@ -70,21 +74,8 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
             "awslogs-stream-prefix" = "ecs"
             }
         }
-    # "logConfiguration": {
-    #             "logDriver": "awslogs",
-    #             "options": {
-    #                 "awslogs-create-group": "true",
-    #                 "awslogs-group": "awslogs-wordpress",
-    #                 "awslogs-region": "us-west-2",
-    #                 "awslogs-stream-prefix": "awslogs-example"
-    #             }
-    #         },
-    
     }
   ])
-
-
-  
 
   runtime_platform {
     operating_system_family = var.ECS_TASK_OS_FAMILY
@@ -118,10 +109,6 @@ resource "aws_ecs_service" "ecs_service" {
   }
     deployment_minimum_healthy_percent = 50
     deployment_maximum_percent         = 200
-
-#     lifecycle {
-#      ignore_changes = [task_definition, desired_count]
-#    }
 
    launch_type                        = "FARGATE"
    scheduling_strategy                = "REPLICA"

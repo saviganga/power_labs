@@ -96,7 +96,6 @@ variable "ECS_TASK_CPU_ARCHITECTURE" {
 
 variable "EXECUTION_ROLE_ARN" {
   type    = string
-#   default = "arn:aws:iam::590184069711:role/ecsTaskExecutionRole"
 }
 
 
@@ -116,7 +115,7 @@ variable "CONTAINER_NAME" {
 
 variable "CONTAINER_IMAGE" {
   type    = string
-  default = "saviganga/power_labs"
+  default = "saviganga/power_labs:20240727070548"
 
 }
 
@@ -135,27 +134,6 @@ variable "POSTGRES_PORT" {
 }
 
 
-variable "POSTGRES_DB" {
-  type    = string
-  default = "madagascar"
-
-}
-
-
-variable "POSTGRES_PASSWORD" {
-  type    = string
-  default = "mAdAgAscAr)(*&^"
-
-}
-
-
-variable "POSTGRES_USER" {
-  type    = string
-  default = "mAdAgAscAr)(*&^"
-
-}
-
-
 variable "ENVIRONMENT" {
   type    = string
   default = "CLOUD"
@@ -165,7 +143,6 @@ variable "ENVIRONMENT" {
 
 variable "SECRET_KEY" {
   type    = string
-  default = "django-insecure-ep5*9qct=3(1c%61r$15nuq#8*!y@l3^u=+ueef011&8p$"
 
 }
 
