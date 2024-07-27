@@ -9,9 +9,9 @@
         region: '{{ region }}'
       register: current_task_definition
 
-    # - name: Set new image URI
-    #   set_fact:
-    #     new_image_uri: "{{ docker_hub_repo }}:{{ new_image_tag }}"
+    - name: Set new image URI
+      set_fact:
+        new_image_uri: '{{ new_image_uri }}'
 
     - name: Debug task definition content
       debug:
