@@ -85,6 +85,18 @@ request body
 ```
 <img width="1085" alt="sensor-data-login" src="https://github.com/user-attachments/assets/9d878ccd-73fa-4f65-aa00-1e685b22dd67">
 
+3. Get user data `127.0.0.1:8000/users/account/`
+This endpoint requires authentication, so update your headers
+```json
+
+headers
+
+{
+    "Authorization": "JWT {{JWT_TOKEN}}",
+}
+```
+<img width="1077" alt="get-users" src="https://github.com/user-attachments/assets/6971c480-ab37-4730-ba0f-14ba25e819eb">
+
 
 
 ### Sensor data
