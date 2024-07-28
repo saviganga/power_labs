@@ -99,6 +99,8 @@ request body
     "sensor_value": "50"
 }
 ```
+<img width="1086" alt="post-sensor-data" src="https://github.com/user-attachments/assets/7b03b4cd-8cdc-49e7-9705-2d71fd85b447">
+
 
 2. GET `127.0.0.1:8000/sensors/sensor-data/`
 This endpoint requires authentication, so update your headers
@@ -110,4 +112,6 @@ headers
     "Authorization": "JWT {{JWT_TOKEN}}",
 }
 ```
+<img width="1073" alt="get-sensor-data" src="https://github.com/user-attachments/assets/1ceb66e4-6543-446e-a68a-cd15294223b3">
+
 
