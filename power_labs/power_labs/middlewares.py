@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 import logging
+logger = logging.getLogger('django')
+
 
 
 class Handle404ErrorsMiddleware:
@@ -25,7 +27,20 @@ class Handle403ErrorsMiddleware:
             return JsonResponse({'status': 'FAILED', 'message': 'Oops! You do not have permission to view this resource'}, status=403)
         return response
     
-logger = logging.getLogger('django')
+
+class Handle500ErrorsMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        return response
+
+    def process_exception(self, request, exception):
+        logger.exception(f'{str(exception)}')
+        return JsonResponse({'status': "FAILED", "message": "Internal Server Error"}, status=500)
+
+    
 
 class LoggingMiddleware:
     def __init__(self, get_response):

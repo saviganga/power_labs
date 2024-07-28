@@ -64,7 +64,7 @@ class SensorDataViewSet(ModelViewSet):
             queryset = self.filter_queryset(self.get_queryset())
             page = self.paginate_queryset(queryset)
             if page is not None:
-                serializer = self.serializer_class(queryset, many=True)
+                serializer = self.serializer_class(page, many=True)
                 return self.get_paginated_response(serializer.data)
             serializer = self.serializer_class(queryset, many=True)
             success_response = {
