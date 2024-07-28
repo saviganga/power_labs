@@ -57,5 +57,12 @@ docker exec -it sensors-backend python3 manage.py migrate
 ```
 
 
+## APIS
+
+### Authentication
+Some endpoints require authentication for access. The application uses JWT Authentication.
+
+1. Signup
+![Alt text](/Users/saviganga/Desktop/sensors-data-signup.png)
 
 
