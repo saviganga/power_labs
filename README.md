@@ -84,3 +84,26 @@ request body
 }
 ```
 
+### Sensor data
+1. POST `127.0.0.1:8000/sensors/sensor-data/`
+```json
+
+request body
+
+{
+    "vehicle_id": "gangax",
+    "sensor_type": "fuel",
+    "sensor_value": "50"
+}
+```
+
+2. GET `127.0.0.1:8000/sensors/sensor-data/`
+```json
+
+headers
+
+{
+    "Authorization": "JWT {{JWT_TOKEN}}",
+}
+```
+
