@@ -53,7 +53,7 @@ curl http://127.0.0.1:8000/sensors/sensor-data/health/
 
 6. Run database migrations: To complete the setup, run the database migrations. In another terminal tab, while your app is still runnung, run the following command
 ```bash
-docker exec -it sensors-backend2 python3 manage.py migrate
+docker exec -it sensors-backend python3 manage.py migrate
 ```
 
 
