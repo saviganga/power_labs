@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'power_labs.middlewares.LoggingMiddleware',
     'power_labs.middlewares.Handle404ErrorsMiddleware',
     'power_labs.middlewares.Handle403ErrorsMiddleware',
+    'power_labs.middlewares.Handle500ErrorsMiddleware'
 ]
 
 ROOT_URLCONF = 'power_labs.urls'
