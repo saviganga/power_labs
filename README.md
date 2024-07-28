@@ -101,6 +101,7 @@ request body
 ```
 
 2. GET `127.0.0.1:8000/sensors/sensor-data/`
+This endpoint requires authentication, so update your headers
 ```json
 
 headers
