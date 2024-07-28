@@ -4,7 +4,7 @@ from opentelemetry.instrumentation.psycopg2 import Psycopg2Instrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 import uptrace
 
-SECRET_KEY = os.environ.get('SECRET_KEY_LOCAL')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = True
 
@@ -14,9 +14,9 @@ DATABASES = {
 
     "default": {        
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get('POSTGRES_DB_LOCAL'),
-        "USER": os.environ.get('POSTGRES_USER_LOCAL'),
-        "PASSWORD": os.environ.get('POSTGRES_PASSWORD_LOCAL'),
+        "NAME": os.environ.get('POSTGRES_DB'),
+        "USER": os.environ.get('POSTGRES_USER'),
+        "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
         "HOST": 'db',
         "PORT": os.environ.get('POSTGRES_PORT'),
     }

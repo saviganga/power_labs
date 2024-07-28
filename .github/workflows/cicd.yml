@@ -56,6 +56,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Get Latest Docker Image Tag
+        id: get_latest_tag
+        run: |
+          LATEST_TAG=$(curl -s https://hub.docker.com/v2/repositories/${{ secrets.DOCKER_HUB_REPO }}/tags/?page_size=1 | jq -r '.results[0].name')
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
           
 
       - name: Initialize Terraform
