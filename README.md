@@ -35,10 +35,10 @@ git clone git@github.com:saviganga/power_labs.git
 
 2. Set up your `.env` file
 ```bash
-cp ./power_labs/env.example ./power_labs/.env
-cd ..
+cd power_labs/
+cp ./power_labs/.env.example ./power_labs/.env
 ```
-After filling in your values, `cd` back to the root directory with the `docker-compose.yml` file.
+Fill the .env file with your values
 
 3. Build the project using `docker-compose`
 ```bash

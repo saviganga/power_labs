@@ -33,7 +33,7 @@ class JWTAuth(APIView):
             token_filter = {"user":f"{user.id}", "platform":f"{platform}"}
             user_tokens = xauth_models.AuthToken.objects.filter(**token_filter)
             if len(user_tokens) == 0:
-                jwt_token = xauth_utils.encode_jwt(user, hours=72, platform=platform)          
+                jwt_token = xauth_utils.encode_jwt(user, platform=platform)          
             else:
                 curr_token = user_tokens[0]
                 if curr_token.expiry_date >= timezone.now():
@@ -43,7 +43,7 @@ class JWTAuth(APIView):
 
                 if curr_token.expiry_date < timezone.now():
                     curr_token.delete()
-                    jwt_token = xauth_utils.encode_jwt(user, hours=72, platform=platform)
+                    jwt_token = xauth_utils.encode_jwt(user, platform=platform)
             user.last_login = timezone.now()
             user.save()
             return Response(

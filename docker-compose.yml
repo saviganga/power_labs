@@ -17,8 +17,8 @@ services:
     env_file:
       - ./power_labs/.env
     volumes:
-      - postgres-db:/var/lib/postgresql/data
+      - postgres-db-vol:/var/lib/postgresql/data
 
 volumes:
-  postgres-db:
+  postgres-db-vol:
 
