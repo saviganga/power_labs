@@ -83,6 +83,9 @@ request body
     "password": "xxxxxx"
 }
 ```
+<img width="1085" alt="sensor-data-login" src="https://github.com/user-attachments/assets/9d878ccd-73fa-4f65-aa00-1e685b22dd67">
+
+
 
 ### Sensor data
 1. POST `127.0.0.1:8000/sensors/sensor-data/`
