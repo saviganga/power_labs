@@ -95,6 +95,8 @@ headers
     "Authorization": "JWT {{JWT_TOKEN}}",
 }
 ```
+<img width="1077" alt="get-users" src="https://github.com/user-attachments/assets/6971c480-ab37-4730-ba0f-14ba25e819eb">
+
 
 
 ### Sensor data
