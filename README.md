@@ -120,4 +120,6 @@ Additionally, the `GET` response can be filtered based on the following optional
 - start_time (ISO 8601 format)
 - end_time (ISO 8601 format)
 
+<img width="1083" alt="get-sensor-data-filtered" src="https://github.com/user-attachments/assets/d9c8ef77-9f7f-4ac3-ab64-06b8e8fa0fb2">
+
 
