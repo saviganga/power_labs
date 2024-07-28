@@ -62,9 +62,25 @@ docker exec -it sensors-backend python3 manage.py migrate
 ### Authentication
 Some endpoints require authentication for access. The application uses JWT Authentication.
 
-1. Signup
+1. Signup `127.0.0.1:8000/users/account/`
+```json
+request body
+
+{
+    "user_name": "saviganga",
+    "password": "xxxxxx",
+    "re_password": "xxxxxx"
+}
+```
 <img width="1081" alt="sensors-data-signup" src="https://github.com/user-attachments/assets/023371b7-f15a-4825-9eb7-d19dca24d02e">
 
+2. Login `127.0.0.1:8000/auth/login/`
+```json
+request body
 
-
+{
+    "username": "saviganga",
+    "password": "xxxxxx"
+}
+```
 
