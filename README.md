@@ -83,6 +83,7 @@ request body
     "password": "xxxxxx"
 }
 ```
-<img width="1083" alt="sensors-data-login" src="https://github.com/user-attachments/assets/0191622d-aad5-418f-ba27-f3ff5cdaf5bc">
+<img width="1085" alt="sensor-data-login" src="https://github.com/user-attachments/assets/9d878ccd-73fa-4f65-aa00-1e685b22dd67">
+
 
 
