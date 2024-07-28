@@ -12,7 +12,7 @@ resource "aws_db_instance" "sensor_data_db_instance" {
   parameter_group_name   = aws_db_parameter_group.sensor_data_db_parameter_group.name
   publicly_accessible    = true
   skip_final_snapshot    = true
-  deletion_protection    = false
+  deletion_protection    = true
 
 
 }
