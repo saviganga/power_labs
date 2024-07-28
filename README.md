@@ -17,10 +17,46 @@ To run the development environment, you need to have the following installed:
 
 ### Environment Variables
 
-A `.env.example` file has been added to the repository. You should create a `.env` file and fill in the required fields with your values to configure your environment.
+A `.env.example` file has been added to the repository. You should create a `.env` file and fill in the required fields with your values to configure your environment. The `ENVIRONMENT` field has been prefilled to suit the configurations on the application.
 
 Example:
 ```.env
 DATABASE_URL=your_database_url
 SECRET_KEY=your_secret_key
 DEBUG=True
+```
+
+## Run the project
+
+1. Clone the repository
+```bash
+git clone git@github.com:saviganga/power_labs.git
+```
+
+2. Set up your `.env` file
+```bash
+cp ./power_labs/env.example ./power_labs/.env
+cd ..
+```
+After filling in your values, `cd` back to the root directory with the `docker-compose.yml` file.
+
+3. Build the project using `docker-compose`
+```bash
+docker-compose build
+```
+
+4. After the build is completed, start the project with `docker-compose`
+```bash
+docker-compose up
+```
+
+5. Test connectivity by making a `GET` request on postman on this endpont `http://127.0.0.1:8000/sensors/sensor-data/health/' or running this command in your terminal
+```bash
+curl http://127.0.0.1:8000/sensors/sensor-data/health/
+
+# response
+{"status":"SUCCESS","message":"Success"}
+```
+
+
+
