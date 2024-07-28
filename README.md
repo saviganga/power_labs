@@ -114,4 +114,10 @@ headers
 ```
 <img width="1073" alt="get-sensor-data" src="https://github.com/user-attachments/assets/1ceb66e4-6543-446e-a68a-cd15294223b3">
 
+Additionally, the `GET` response can be filtered based on the following optional fields:
+- vehicle_id
+- sensor_type
+- start_time (ISO 8601 format)
+- end_time (ISO 8601 format)
+
 
