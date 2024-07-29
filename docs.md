@@ -20,6 +20,7 @@ This endpoint allows users to create a new account.
     "password": "xxxxxx",
     "re_password": "xxxxxx"
 }
+```
 <img width="1081" alt="sensors-data-signup" src="https://github.com/user-attachments/assets/023371b7-f15a-4825-9eb7-d19dca24d02e">
 
 2. Login `127.0.0.1:8000/auth/login/`
