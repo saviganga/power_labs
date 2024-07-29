@@ -23,16 +23,23 @@ This endpoint allows users to create a new account.
 ```
 <img width="1081" alt="sensors-data-signup" src="https://github.com/user-attachments/assets/023371b7-f15a-4825-9eb7-d19dca24d02e">
 
-2. Login `127.0.0.1:8000/auth/login/`
-```json
-request body
 
+
+#### 2. Login
+This endpoint allows users to login to their accounts.
+
+- **Endpoint**: `127.0.0.1:8000/auth/login/`
+- **Method**: POST
+
+**Request Body:**
+```json
 {
     "username": "saviganga",
     "password": "xxxxxx"
 }
 ```
 <img width="1085" alt="sensor-data-login" src="https://github.com/user-attachments/assets/9d878ccd-73fa-4f65-aa00-1e685b22dd67">
+
 
 3. Get user data `127.0.0.1:8000/users/account/`
 This endpoint requires authentication, so update your headers
