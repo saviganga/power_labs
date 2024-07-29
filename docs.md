@@ -1,19 +1,25 @@
+# API Documentation
 
-## APIS
+This guide provides detailed information on how to interact with the APIs, including endpoints for user authentication and sensor data management. Ensure you have the appropriate authentication tokens before making requests to secure endpoints.
+
+## APIs Overview
 
 ### Authentication
-Some endpoints require authentication for access. The application uses JWT Authentication.
+The application uses JWT Authentication for secure access to specific endpoints
 
-1. Signup `127.0.0.1:8000/users/account/`
+#### 1. Signup
+This endpoint allows users to create a new account.
+
+- **Endpoint**: `127.0.0.1:8000/users/account/`
+- **Method**: POST
+
+**Request Body:**
 ```json
-request body
-
 {
     "user_name": "saviganga",
     "password": "xxxxxx",
     "re_password": "xxxxxx"
 }
-```
 <img width="1081" alt="sensors-data-signup" src="https://github.com/user-attachments/assets/023371b7-f15a-4825-9eb7-d19dca24d02e">
 
 2. Login `127.0.0.1:8000/auth/login/`
