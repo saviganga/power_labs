@@ -106,53 +106,45 @@ Additionally, the `GET` sensors data response can be filtered based on the follo
 <img width="1083" alt="get-sensor-data-filtered" src="https://github.com/user-attachments/assets/d9c8ef77-9f7f-4ac3-ab64-06b8e8fa0fb2">
 
 
-### Infrastructure
 
-The cloud infrastructure for this service is AWS.
+# Infrastructure and Deployment
 
-Since the application is containerized, it is hosted on AWS Elastic Cluster Service (FARGATE) saving cost on virtual machine resource management. 
+## Cloud Infrastructure
 
-The ECS sits behind a loadbalancer, allowing only traffic from the load balancer, and denying access from the public internet
+The cloud infrastructure for this service is hosted on AWS. Key components include:
 
-### Infrastructure as Code
+- **Containerization**: The application is containerized and runs on AWS Elastic Container Service (ECS) with Fargate. This setup reduces costs associated with virtual machine resource management.
+- **Load Balancer**: The ECS cluster is positioned behind an Application Load Balancer (ALB), which restricts access to traffic from the load balancer only, blocking direct public internet access.
 
-Terraform is used to define the infrastructure on AWS
+## Infrastructure as Code
 
-- ./devops/terraform/:
-    
-    - providers.tf: Declares the providers that Terraform will use, and defines the backend (AWS S3) where Terraform will store the state of our infrastructure.
-    
-    - vars.tf: Contains variables for the Terraform configuration.
-    
-    - security_groups.tf: Contains Terraform configurations to provision ingress and egress rules for the provisioned resources.
-    
-    - alb.tf: Contains Terraform configurations to provision an Application Load Balancer, a target group, and a listener.
-    
-    - db.tf: Contains Terraform configurations to provision the database.
-    
-    - ecs.tf: Contains Terraform configurations to provision the ECS infrastructure (cluster, service, task definitions, etc)
-    
-    - iam.tf: Contains terraform configurations to provision iam roles and policies for the cloud infrastructure
-    
-    - vpc.tf: contains terraform configurations to fetch cloud VPC information
+Terraform is utilized for defining and managing the infrastructure on AWS. The configuration files are located in `./devops/terraform/`:
 
+- **`providers.tf`**: Declares the Terraform providers and defines the backend (AWS S3) for storing the Terraform state.
+- **`vars.tf`**: Contains variables used in the Terraform configuration.
+- **`security_groups.tf`**: Configures ingress and egress rules for the resources.
+- **`alb.tf`**: Provisions the Application Load Balancer, including its target group and listener.
+- **`db.tf`**: Sets up the database configuration.
+- **`ecs.tf`**: Manages the ECS infrastructure, including the cluster, service, and task definitions.
+- **`iam.tf`**: Defines IAM roles and policies for the cloud infrastructure.
+- **`vpc.tf`**: Configures and retrieves VPC information.
 
-### Configuration Management
+## Configuration Management
 
-Ansible is used to configure the application on the provisioned infrastructure. The ansible script is run from the CICD pipeline, ensuring the application is up to date with its latest image on every push to the branch
+Ansible is used for configuring the application on the provisioned infrastructure. The Ansible script runs from the CI/CD pipeline, ensuring the application is updated with the latest image on every push to the branch.
 
-- ./devops/ansible/:
-    
-    - ./playbooks/update_ecs_task.yaml: Updates the AWS ECS task definition and service with the application's latest image.
+- **`./devops/ansible/playbooks/update_ecs_task.yaml`**: Updates the AWS ECS task definition and service with the latest application image.
 
+## CI/CD Pipeline
 
-### CI/CD
+The CI/CD pipeline is built using GitHub Actions and consists of two main pipelines:
 
-The CICD pipeline is built with GitHub Actions. It builds the new application image, and either updates the AWS infrastructure or the application on the infrastructure depending on the branch that is pushed to
+1. **Infrastructure Pipeline**:
+   - **Trigger**: Activates on a push to the `devops` branch.
+   - **Action**: Runs Terraform to build and update the infrastructure if there are any changes.
 
-- The infrastructure pipeline is triggered when there is a push to the `devops` branch. When there is a push to that branch, the terraform build is triggered, and the infrastructure is updated (if any changes).
+2. **Application Image Pipeline**:
+   - **Trigger**: Activates on a push to the `ganga` branch.
+   - **Action**: Runs Ansible to update the ECS cluster with the new application image.
 
-- The application image pipeline is triggered when there is a push to the `ganga` branch. When there is a push to that branch, the ansible build is triggered, and the ECS cluster is updated with the new application image.
-
-
-
+This setup ensures that infrastructure changes and application updates are managed efficiently and deployed automatically based on branch activity.
