@@ -41,24 +41,36 @@ This endpoint allows users to login to their accounts.
 <img width="1085" alt="sensor-data-login" src="https://github.com/user-attachments/assets/9d878ccd-73fa-4f65-aa00-1e685b22dd67">
 
 
-3. Get user data `127.0.0.1:8000/users/account/`
-This endpoint requires authentication, so update your headers
+
+#### 3. Get user data
+This endpoint allows users to view their user account information.
+
+- **Endpoint**: `127.0.0.1:8000/users/account/`
+- **Method**: GET
+- **Authorization**: true
+
+**Request Headers:**
 ```json
-
-headers
-
 {
-    "Authorization": "JWT {{JWT_TOKEN}}",
+    "JWT": "JWT {{jwt_token}}"
 }
 ```
 
 
+
+
 ### Sensor data
-1. POST `127.0.0.1:8000/sensors/sensor-data/`
+
+
+#### 1. Post sensor data
+This endpoint allows users to post vehicle sensor data.
+
+- **Endpoint**: `127.0.0.1:8000/sensors/sensor-data/`
+- **Method**: POST
+- **Authorization**: false
+
+**Request body:**
 ```json
-
-request body
-
 {
     "vehicle_id": "gangax",
     "sensor_type": "fuel",
@@ -66,6 +78,7 @@ request body
 }
 ```
 <img width="1086" alt="post-sensor-data" src="https://github.com/user-attachments/assets/7b03b4cd-8cdc-49e7-9705-2d71fd85b447">
+
 
 
 2. GET `127.0.0.1:8000/sensors/sensor-data/`
