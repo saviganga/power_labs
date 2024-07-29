@@ -81,19 +81,23 @@ This endpoint allows users to post vehicle sensor data.
 
 
 
-2. GET `127.0.0.1:8000/sensors/sensor-data/`
-This endpoint requires authentication, so update your headers
+#### 2. Get sensor data
+This endpoint allows users to get vehicle sensor data.
+
+- **Endpoint**: `127.0.0.1:8000/sensors/sensor-data/`
+- **Method**: GET
+- **Authorization**: true
+
+**Request headers:**
 ```json
-
-headers
-
 {
-    "Authorization": "JWT {{JWT_TOKEN}}",
+    "JWT": "JWT {{jwt_token}}"
 }
 ```
 <img width="1073" alt="get-sensor-data" src="https://github.com/user-attachments/assets/1ceb66e4-6543-446e-a68a-cd15294223b3">
 
-Additionally, the `GET` response can be filtered based on the following optional fields:
+
+Additionally, the `GET` sensors data response can be filtered based on the following optional fields:
 - vehicle_id
 - sensor_type
 - start_time (ISO 8601 format)
