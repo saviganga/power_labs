@@ -57,6 +57,21 @@ This endpoint allows users to view their user account information.
 ```
 
 
+#### 3. Logout
+This endpoint allows users to log out.
+
+- **Endpoint**: `127.0.0.1:8000/auth/logout/`
+- **Method**: GET
+- **Authorization**: true
+
+**Request Headers:**
+```json
+{
+    "JWT": "JWT {{jwt_token}}"
+}
+```
+
+
 
 
 ### Sensor data
