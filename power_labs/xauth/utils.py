@@ -83,7 +83,8 @@ def destroy_jwt(jwt_token: str, all=False):
     :param jwt_token: str
     :param all: bool
     """
-    payload, user = decode_jwt(jwt_token)
+    is_payload, payload = decode_jwt(jwt_token)
+    payload =  payload[0]
     token = payload["token"]
     if all:
         xauth_models.AuthToken.objects.filter(user_id=payload["sub"]).delete()

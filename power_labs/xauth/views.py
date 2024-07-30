@@ -58,18 +58,8 @@ class JWTDestroy(APIView):
     def get(self, request, *args, **kwargs):
         jwt_token = request.META.get("HTTP_AUTHORIZATION", "")
         try:
-            xauth_utils.destroy_jwt(
-                jwt_token.split(" ", 1)[1], bool(request.query_params.get("all", False))
-            )
+            jwt, is_all = jwt_token.split(" ", 1)[1], bool(request.query_params.get("all", False))
+            xauth_utils.destroy_jwt(jwt, is_all)
         except Exception as e:
-            data ={
-                "status": "FAILED",
-                "message": "User already logged out"
-            }
             return Response(data=xauth_responses.jwtautherror(message='User already logged out'), status=status.HTTP_400_BAD_REQUEST)
-
-        data ={
-            "status": "SUCCESS",
-            "message": "Logout successful"
-        }
         return Response(data=xauth_responses.jwtlogoutsuccess(), status=status.HTTP_200_OK)
