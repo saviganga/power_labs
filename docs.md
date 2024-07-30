@@ -4,13 +4,15 @@ This guide provides detailed information on how to interact with the APIs, inclu
 
 ## APIs Overview
 
+- **Base Url**: `power-labs-lb-704067787.us-east-1.elb.amazonaws.com:8000`
+
 ### Authentication
 The application uses JWT Authentication for secure access to specific endpoints
 
 #### 1. Signup
 This endpoint allows users to create a new account.
 
-- **Endpoint**: `127.0.0.1:8000/users/account/`
+- **Endpoint**: `{{BASE_URL}}/users/account/`
 - **Method**: POST
 
 **Request Body:**
@@ -28,7 +30,7 @@ This endpoint allows users to create a new account.
 #### 2. Login
 This endpoint allows users to login to their accounts.
 
-- **Endpoint**: `127.0.0.1:8000/auth/login/`
+- **Endpoint**: `{{BASE_URL}}/auth/login/`
 - **Method**: POST
 
 **Request Body:**
@@ -45,7 +47,7 @@ This endpoint allows users to login to their accounts.
 #### 3. Get user data
 This endpoint allows users to view their user account information.
 
-- **Endpoint**: `127.0.0.1:8000/users/account/`
+- **Endpoint**: `{{BASE_URL}}/users/account/`
 - **Method**: GET
 - **Authorization**: true
 
@@ -60,7 +62,7 @@ This endpoint allows users to view their user account information.
 #### 3. Logout
 This endpoint allows users to log out.
 
-- **Endpoint**: `127.0.0.1:8000/auth/logout/`
+- **Endpoint**: `{{BASE_URL}}/auth/logout/`
 - **Method**: GET
 - **Authorization**: true
 
@@ -80,7 +82,7 @@ This endpoint allows users to log out.
 #### 1. Post sensor data
 This endpoint allows users to post vehicle sensor data.
 
-- **Endpoint**: `127.0.0.1:8000/sensors/sensor-data/`
+- **Endpoint**: `{{BASE_URL}}/sensors/sensor-data/`
 - **Method**: POST
 - **Authorization**: false
 
@@ -99,7 +101,7 @@ This endpoint allows users to post vehicle sensor data.
 #### 2. Get sensor data
 This endpoint allows users to get vehicle sensor data.
 
-- **Endpoint**: `127.0.0.1:8000/sensors/sensor-data/`
+- **Endpoint**: `{{BASE_URL}}/sensors/sensor-data/`
 - **Method**: GET
 - **Authorization**: true
 
